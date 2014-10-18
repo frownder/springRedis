@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+    
+    <!-- Uncomment and add your base-package here:-->
+    <context:component-scan base-package="my"/>  
+	
+	<!-- myster -->
+	<bean id="myMaster" class= "org.springframework.data.redis.connection.RedisNode" c:host="127.0.0.1" c:port="6379" p:name="mymaster"/>
+	
+	<!-- Sentinels -->
+	<bean id="mySent1" class= "org.springframework.data.redis.connection.RedisNode" c:host="127.0.0.1" c:port="26379"/>
+	<bean id="mySent2" class= "org.springframework.data.redis.connection.RedisNode" c:host="127.0.0.1" c:port="26381"/>
+	<bean id="mySents" class= "java.util.HashSet">
+		<constructor-arg>
+			<list>
+				<ref bean="mySent1" />
+				<ref bean="mySent2" />
+			</list>
+		</constructor-arg>
+	</bean>
+		
+	 
+	<!-- RedisSentinelConfiguration:  org.springframework.data.redis.connection.RedisSentinelConfiguration" -->
+	<bean id="redisSentinelConf" class="my.MySentinelConfiguration" 
+		p:master-ref="myMaster" 
+		p:mySentinels-ref="mySents"
+	/>	
+	<!-- p:sentinels-ref="mySents"  :  ERROR 발생-->
+	
+	
+	<!--POOL & Connection-->
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig"/>
+	<bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" 
+    	p:use-pool="true"
+    	p:poolConfig-ref="jedisPoolConfig"
+    	c:sentinelConfig-ref="redisSentinelConf" 
+    />
+    <!-- 
+    p:host-name="127.0.0.1" p:port="6379"
+    -->
+
+	<bean id="stringRedisSerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+    
+	<!-- redis template definition -->
+	<bean id="redisTemplate" 
+    class="org.springframework.data.redis.core.RedisTemplate" 
+    p:connection-factory-ref="jedisConnFactory"
+    p:keySerializer-ref="stringRedisSerializer"
+    p:hashKeySerializer-ref="stringRedisSerializer"
+    p:hashValueSerializer-ref="stringRedisSerializer"  
+    p:valueSerializer-ref="stringRedisSerializer"/>
+	
+      
+	<aop:aspectj-autoproxy/>
+	
+	
+</beans>
