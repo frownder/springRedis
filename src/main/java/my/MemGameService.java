@@ -1,6 +1,6 @@
 package my;
 
-import java.util.HashMap;
+import java.util.*;
 
 import org.springframework.stereotype.Service;
 
@@ -12,6 +12,14 @@ import my.starworld.*;
 public class MemGameService implements IMemGameService {
 
 	private HashMap<String, Player> hashMapAllPlayer = new HashMap<String,Player>();
+	
+	/**
+	 * returns all Player 
+	 * @return List of all player which hashMapAllPlayer contains
+	 */
+	public List<Player> getPlayerList(){
+		return new ArrayList(hashMapAllPlayer.values());
+	}
 	
 	/**
 	 * Finds the player and returns it. Using playerId parameter.

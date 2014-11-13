@@ -133,6 +133,40 @@ public class Player{
 	}
 	
 	
+	/* unit Count function for WEB displaying: for displaying in Player List */
+	public int getMarineCount(){
+		int count=0;
+		for(BionicUnit unit : allUnit)
+			if (unit instanceof Marine)
+				count++;
+		
+		return count;
+	}
+	public int getMedicCount(){
+		int count=0;
+		for(BionicUnit unit : allUnit)
+			if (unit instanceof Medic)
+				count++;
+		
+		return count;
+	}
+	public int getFirebatCount(){
+		int count=0;
+		for(BionicUnit unit : allUnit)
+			if (unit instanceof Firebat)
+				count++;
+		
+		return count;
+	}
+	public int getGhostCount(){
+		int count=0;
+		for(BionicUnit unit : allUnit)
+			if (unit instanceof Ghost)
+				count++;
+		
+		return count;
+	}
+	
 
 	/*getter & setter*/
 	public String getPlayerId(){

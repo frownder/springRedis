@@ -1,6 +1,7 @@
 package my;
 
 import my.starworld.Player;
+import java.util.List;
 
 /**
  * Interface for GameService using Memory
@@ -12,6 +13,11 @@ import my.starworld.Player;
  */
 public interface IMemGameService {
 
+	/**
+	 * returns all Player 
+	 * @return List of all player which hashMapAllPlayer contains
+	 */
+	public List<Player> getPlayerList();
 	/**
 	 * Finds the player and returns it. Using playerId parameter.
 	 * @param playerId  player's unique Id.

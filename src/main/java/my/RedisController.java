@@ -1,5 +1,7 @@
 package my;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -7,6 +9,7 @@ import my.starworld.Player;
 
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.mobile.device.Device;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +30,27 @@ public class RedisController {
 	 */
 	private ObjectMapper mapper = new ObjectMapper( )
 										.enableDefaultTyping(ObjectMapper.DefaultTyping.JAVA_LANG_OBJECT, JsonTypeInfo.As.WRAPPER_ARRAY);
+
+	/**
+	 * returns all player list to requesting client as a JSON format.
+	 *   which contains all unit information the player has.
+	 * @param request servlet request
+	 * @return WebPage or mobileWebPage
+	 */
+	
+	@RequestMapping("/Player")     // base+/starworld/Player
+	public String getPlayerListDo(HttpServletRequest request ){
+		 
+		List<Player> playerList = memGameService.getPlayerList();
+		request.setAttribute("playerList", playerList);
+		
+		//Device check for Mobile
+		Device device = (Device)request.getAttribute("currentDevice"); //org.springframework.mobile.device.Device
+		if(device.isMobile())
+			return "listMobile";  //WEB-INF/view/lstMobile.jsp
+		
+		return "list";  //WEB-INF/view/list.jsp 
+	}
 	
 	/**
 	 * returns a player to requesting client as a JSON format.
@@ -74,7 +98,7 @@ public class RedisController {
 		}
 		
 		request.setAttribute("message", returnMsg );
-		return "showMessage";  //WEB-INF/view/list.jsp 
+		return "showMessage";  //WEB-INF/view/shoMessage.jsp 
 	}
 	
 	

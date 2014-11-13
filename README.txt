@@ -27,3 +27,19 @@ using:
                /   |   \
            Marine Ghost Firebat
 
+== Web,mobileWeb added=============
+using:
+    spring mobile: discrimination mobileWeb from web
+
+list.jsp(Web):
+    -simple web page using jstl, jQuery
+    
+listMobile.jsp(mobileWeb):
+    -mobileWeb using:
+                     <meta viewport> and 
+                     CSS3 @media screen Queury 
+                  to differentiate screen Size .
+
+
+
+
