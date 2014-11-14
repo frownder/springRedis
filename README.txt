@@ -2,18 +2,28 @@
 This test project simplifies a COC style multi user RTS Game called starworld.
   (COC:Clash of Clans)
 
-service structre:
-    Game Client <--(Http)-->  Memory Game Service <--> redis DB(master) <-->redis slave
-                (Player Data)             (Player Data storing/caching for service&failover)
+Service structre:
+   Game Client <---> Game Service <--> redis DB(master) <-->redis slave
+            (Player Data)              (Data caching for failover)
 
-using:
-    spring framework for service (simple RESTful style service using just GET method)
+Frontend using:
+    spring mobile framework - discrimination mobileWeb from web  
+        on RedisController.java 
+
+    files:
+        list.jsp(Web) -simple web page using JSTL, jQuery
+        listMobile.jsp(mobileWeb)- differentaiate screen size using:
+             <meta viewport> & CSS3 @media screen Queury 
+
+
+Backend using:
+    spring framework -  RESTful style service 
     redis (no-sql) for memory caching and recovery.
-        - HA using sentinel and DI(Dependency Injection) on application-conifg.xml 
+        - HA using sentinel and DI(Dependency Injection) on conifg xml 
           (MySentinelConfiguration class is made for this purpose)
         - SDR(sping data for redis) and jedis connection pool        
-    Jackson and JSON style object serialization for both redis backup and web service
-        (JSON is better for web service and Jackson is faster than java object serialization)
+    Jackson and JSON object serialization for both redis cache & web service
+        (JSON for WebService & Jackson for faster serialization)
     AspectJ(AOP) for measuring method running time 
     Junit for class unit test
     HtmlUnit for web service test
@@ -26,20 +36,4 @@ using:
                 /  |  \
                /   |   \
            Marine Ghost Firebat
-
-== Web,mobileWeb added=============
-using:
-    spring mobile: discrimination mobileWeb from web
-
-list.jsp(Web):
-    -simple web page using jstl, jQuery
-    
-listMobile.jsp(mobileWeb):
-    -mobileWeb using:
-                     <meta viewport> and 
-                     CSS3 @media screen Queury 
-                  to differentiate screen Size .
-
-
-
 
