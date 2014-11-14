@@ -1,10 +1,12 @@
 
 This test project simplifies a COC style multi user RTS Game called starworld.
-    and two simple web page for fronend is added.     (COC:Clash of Clans) 
+    and two simple web page for frontend is added lately. (COC:Clash of Clans) 
 
 Service structre:
     Game Client <---> Game Service <--> redis DB(master) <-->redis slave
             (Player Data)              (Data caching for failover)
+
+
 
 Frontend using:
     spring mobile framework - discrimination mobileWeb from web  
@@ -14,6 +16,7 @@ Frontend using:
         list.jsp(Web) -simple web page using JSTL, jQuery
         listMobile.jsp(mobileWeb)- differentaiate screen size using:
              <meta viewport> & CSS3 @media screen Queury 
+
 
 
 Backend using:
