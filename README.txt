@@ -1,9 +1,9 @@
 
 This test project simplifies a COC style multi user RTS Game called starworld.
-  (COC:Clash of Clans)
+    and two simple web page for fronend is added.     (COC:Clash of Clans) 
 
 Service structre:
-   Game Client <---> Game Service <--> redis DB(master) <-->redis slave
+    Game Client <---> Game Service <--> redis DB(master) <-->redis slave
             (Player Data)              (Data caching for failover)
 
 Frontend using:
@@ -24,9 +24,11 @@ Backend using:
         - SDR(sping data for redis) and jedis connection pool        
     Jackson and JSON object serialization for both redis cache & web service
         (JSON for WebService & Jackson for faster serialization)
+
     AspectJ(AOP) for measuring method running time 
     Junit for class unit test
     HtmlUnit for web service test
+
     Object Oriented Class design for polymorphic BionicUnit
                    BionicUnit
                      /   \
