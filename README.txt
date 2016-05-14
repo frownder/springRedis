@@ -1,6 +1,7 @@
 
-This test project simplifies a COC style multi user RTS Game called starworld.
-    and two simple web page for frontend is added lately. (COC:Clash of Clans) 
+This project simplifies a multi user RTS Game (called StarCraft )
+    and demonstrates the use of redis(noSQL) on spring framework
+    using OO-design architecture.
 
 Service structre:
     Game Client <---> Game Service <--> redis DB(master) <-->redis slave
